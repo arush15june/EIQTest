@@ -119,12 +119,13 @@ const App = () => {
     
     Object.keys(answers).map((v) => {
       const val = answers[v]
-      const correctVal = NRLIST[v] == "N" ? val : ReverseScore[val]  
+      const correctVal = NRLIST[v] === "N" ? val : ReverseScore[val]  
       scores.push(correctVal)
+      return 0
     })
 
     const result = scores.reduce((a,v,i)=>(a*i+v)/(i+1))
-    setResult(<><h1>Your score is {result}</h1></>)
+    setResult(<><h1>Your score is {result.toFixed(2)}</h1></>)
 
   }
   
@@ -149,11 +150,18 @@ const App = () => {
         </div>
 
         <div className="row my-4">
+          <div className="col">
+            <div className="mx-auto" style={{width: "80%"}} >
+              <p>Instructions: Please answer each statement below by putting a circle around the number that best reflects your degree of agreement or disagreement with that statement.</p>
+              <p>Do not think too long about the exact meaning of the statements. Work quickly and try to answer as accurately as possible.</p> 
+              <p>There are no right or wrong answers. There are seven possible responses to each statement ranging from <strong>"Completely Disagree" (number 1)</strong> to <strong>"Completely Agree" (number 7)</strong>.</p>
+            </div>
+          </div>
         </div>
 
         {Questions.map((v, i) => {
           return <>
-            <div className="row mx-auto w-50">
+            <div className="row mx-auto">
               <div className="col">
                 <h4>Q{i+1}. {v}</h4>
                 <div className="row py-4">
@@ -161,9 +169,9 @@ const App = () => {
                     {
                       answers[i+1] !== 0 && answers[i+1] === ans 
                       ? 
-                      <div className="col"><button onClick={() => {setAnswer(i+1, ans)}} className={"btn btn-primary w-100 px-2"}><strong>{ans}</strong></button></div>  
+                      <div className="col p-2"><button onClick={() => {setAnswer(i+1, ans)}} className={"btn btn-primary w-100 px-2"}><strong>{ans}</strong></button></div>  
                       :
-                      <div className="col"><button onClick={() => {setAnswer(i+1, ans)}} className={"btn btn-outline-primary w-100 px-2"}><strong>{ans}</strong></button></div>
+                      <div className="col p-2"><button onClick={() => {setAnswer(i+1, ans)}} className={"btn btn-outline-primary w-100 px-2"}><strong>{ans}</strong></button></div>
                     }
                   </>)}
                 </div>
@@ -180,10 +188,14 @@ const App = () => {
 
         <div className="row my-4">
           <div className="col">
-          <center>{result}</center>
+            <center>{result}</center>
+            <div className="mx-auto" style={{width: "60%"}} >
+              <p>Global Averages</p>
+              <p>Men: 5.05</p> 
+              <p>Women: 4.94</p>
+            </div>
           </div>
         </div>
-
       </div>
     )
   };
